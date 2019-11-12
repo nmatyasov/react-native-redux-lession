@@ -53,7 +53,6 @@ export default class App extends Component {
   }, 250);
 
   handleSearch = text => {
-    //Test
     const formatQuery = text.toLowerCase();
     const data = _.filter(this.state.fullData, user => {
       return contains(user, formatQuery);
