@@ -1,4 +1,4 @@
-package com.redux;
+package com.searchbar;
 
 import android.app.Application;
 import android.content.Context;

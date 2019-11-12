@@ -9,7 +9,16 @@ import {
 } from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
 import _ from 'lodash';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+
 import {getUsers, contains} from './src/Api/index';
+import redusers from './src/reducers/userReducer';
+
+const store = createStore(
+  redusers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 export default class App extends Component {
   constructor(props) {
@@ -81,14 +90,16 @@ export default class App extends Component {
     }
 
     return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: '#CED0CE',
-        }}>
-        <ActivityIndicator animating size="large" />
-      </View>
+      <Provider store={store}>
+        <View
+          style={{
+            paddingVertical: 20,
+            borderTopWidth: 1,
+            borderColor: '#CED0CE',
+          }}>
+          <ActivityIndicator animating size="large" />
+        </View>
+      </Provider>
     );
   };
 
