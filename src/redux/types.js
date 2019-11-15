@@ -1,0 +1,4 @@
+export const FILTER_DATA = 'FILTER_DATA';
+export const FETCHING_DATA = 'FETCHING_DATA';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_ERR = 'FETCH_DATA_ERR';
