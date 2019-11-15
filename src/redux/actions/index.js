@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 import {getUsers, contains} from '../../Api';
 
-export function makeRemoteRequest(val: string) {
+export function makeRemoteRequest(val) {
   return function(dispatch) {
     dispatch(getRequest());
     getUsers(20, val)
