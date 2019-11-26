@@ -2,12 +2,12 @@
 import React, {Component} from 'react';
 import {
   View,
-  FlatList,
+  SectionList,
   ActivityIndicator,
   SafeAreaView,
   KeyboardAvoidingView,
 } from 'react-native';
-import {ListItem, SearchBar} from 'react-native-elements';
+import {ListItem, SearchBar, Text} from 'react-native-elements';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -53,6 +53,34 @@ class HomeScreen extends Component {
     );
   };
 
+  renderItem({item, index}) {
+    return (
+      <ListItem
+        roundAvatar
+        title={`${item.name.first} ${item.name.last}`}
+        subtitle={item.email}
+        leftAvatar={{source: {uri: item.picture.thumbnail}}}
+        containerStyle={{borderBottomWidth: 0}}
+      />
+    );
+  }
+
+  renderSection({section}) {
+    return (
+      <View>
+        <Text
+          style={{
+            backgroundColor: '#bdc6cf',
+            fontSize: 20,
+            padding: 5,
+            color: '#fff',
+          }}>
+          {section.title}
+        </Text>
+      </View>
+    );
+  }
+
   render() {
     const {data, text, fullData} = this.props;
     return (
@@ -65,18 +93,11 @@ class HomeScreen extends Component {
             onChangeText={event => this.props.handleSearch(event, fullData)}
             value={text}
           />
-          <FlatList
-            data={data}
-            renderItem={({item}) => (
-              <ListItem
-                roundAvatar
-                title={`${item.name.first} ${item.name.last}`}
-                subtitle={item.email}
-                leftAvatar={{source: {uri: item.picture.thumbnail}}}
-                containerStyle={{borderBottomWidth: 0}}
-              />
-            )}
-            keyExtractor={item => item.email}
+          <SectionList
+            sections={data}
+            renderSectionHeader={this.renderSection.bind(this)}
+            renderItem={this.renderItem.bind(this)}
+            keyExtractor={(item, index) => index}
             ItemSeparatorComponent={this.renderSeparator}
             ListFooterComponent={this.renderFooter}
           />

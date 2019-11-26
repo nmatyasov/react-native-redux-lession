@@ -25,13 +25,15 @@ export default (state = initialState, action) => {
         ...state,
         data: action.payload.data,
         query: action.payload.query,
+        loading: false,
       };
     case FETCH_DATA_SUCCESS:
       return {
         ...state,
-        fullData: action.payload,
-        data: action.payload,
+        fullData: action.payload.fullData,
+        data: action.payload.data,
         loading: false,
+        error: false,
       };
     case FETCH_DATA_ERR:
       return {

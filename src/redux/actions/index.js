@@ -6,14 +6,16 @@ import {
 } from '../types';
 import _ from 'lodash';
 
-import {getUsers, contains} from '../../Api';
+import {getUsers, contains, makeSortSectionList} from '../../Api';
 
 export function makeRemoteRequest(val) {
   return function(dispatch) {
     dispatch(getRequest());
     getUsers(20, val)
       .then(users => {
-        dispatch(getRequestSuccess(users));
+        //sort array by section
+        const sordedData = makeSortSectionList(users);
+        dispatch(getRequestSuccess(sordedData, users));
       })
       .catch(error => {
         dispatch(getRequestFailure());
@@ -28,10 +30,10 @@ function getRequest() {
 }
 
 //Success fetch data
-function getRequestSuccess(data) {
+function getRequestSuccess(data, users) {
   return {
     type: FETCH_DATA_SUCCESS,
-    payload: data,
+    payload: {data: data, fullData: users},
   };
 }
 
@@ -44,13 +46,16 @@ function getRequestFailure() {
 
 export function handleSearch(val, fullData) {
   return function(dispatch) {
+    dispatch(getRequest());
     const formatQuery = val.toLowerCase();
 
     const data = _.filter(fullData, user => {
       return contains(user, formatQuery);
     });
+    //sort array by section
+    const sordedData = makeSortSectionList(data);
 
-    dispatch(getDataFiltered(val, data));
+    dispatch(getDataFiltered(val, sordedData));
   };
 }
 
