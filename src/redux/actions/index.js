@@ -8,7 +8,13 @@ import _ from 'lodash';
 
 import {getUsers, contains, makeSortSectionList} from '../../Api';
 
-export function makeRemoteRequest(val) {
+//future functional
+// export const debounceMakeRemoteRequest = _.debounce(
+//   val => makeRemoteRequest(val),
+//   250,
+// );
+
+export const makeRemoteRequest = val => {
   return function(dispatch) {
     dispatch(getRequest());
     getUsers(20, val)
@@ -21,7 +27,7 @@ export function makeRemoteRequest(val) {
         dispatch(getRequestFailure());
       });
   };
-}
+};
 //start fetching data
 function getRequest() {
   return {
@@ -44,7 +50,7 @@ function getRequestFailure() {
   };
 }
 
-export function handleSearch(val, fullData) {
+export const handleSearch = (val, fullData) => {
   return function(dispatch) {
     dispatch(getRequest());
     const formatQuery = val.toLowerCase();
@@ -57,7 +63,7 @@ export function handleSearch(val, fullData) {
 
     dispatch(getDataFiltered(val, sordedData));
   };
-}
+};
 
 function getDataFiltered(text, data) {
   return {
