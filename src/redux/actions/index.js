@@ -15,14 +15,14 @@ import {getUsers, contains, makeSectionList} from '../../Api';
 //   250,
 // );
 
-export const makeRemoteRequest = (padding, val) => {
+export const makeRemoteRequest = (padding = 20, val = '') => {
   return function(dispatch) {
     dispatch(getRequest());
     getUsers(padding, val)
       .then(users => {
         //sort array by section
         const secData = makeSectionList(users);
-        dispatch(getRequestSuccess(secData, users));
+        dispatch(getRequestSuccess(secData, users, padding));
       })
       .catch(error => {
         dispatch(getRequestFailure());
@@ -37,10 +37,10 @@ function getRequest() {
 }
 
 //Success fetch data
-function getRequestSuccess(data, users) {
+function getRequestSuccess(data, users, padding) {
   return {
     type: FETCH_DATA_SUCCESS,
-    payload: {data: data, fullData: users},
+    payload: {data: data, fullData: users, padding: padding},
   };
 }
 

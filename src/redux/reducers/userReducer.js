@@ -38,6 +38,7 @@ export default (state = initialState, action) => {
         data: action.payload.data,
         loading: false,
         error: false,
+        padding: action.payload.padding,
       };
     case FETCH_DATA_ERR:
       return {

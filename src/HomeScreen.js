@@ -32,7 +32,7 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.makeRemoteRequest(this.props.padding);
+    this.props.makeRemoteRequest();
   }
 
   renderSeparator = () => {
@@ -94,7 +94,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const {data, text, fullData, sortdirection} = this.props;
+    const {data, text, fullData, sortdirection, padding} = this.props;
     return (
       <SafeAreaView>
         <KeyboardAvoidingView>
@@ -128,15 +128,18 @@ class HomeScreen extends Component {
                     onSelect={() =>
                       this.props.handleSortDirection(sortdirection)
                     }
-                    text={sortdirection === 1 ? 'Sort by ASC' : 'Sort by DESC'}
+                    text={sortdirection === 1 ? 'Sort by DESC' : 'Sort by ASC'}
                   />
-                  <MenuOption onSelect={() => Alert.alert('Delete')}>
-                    <Text style={{color: 'red'}}>Delete</Text>
-                  </MenuOption>
+                  <View style={styles.divider} />
                   <MenuOption
-                    onSelect={() => Alert.alert('Not called')}
-                    disabled={true}
-                    text="Disabled"
+                    onSelect={() =>
+                      this.props.makeRemoteRequest(padding + 20, text)
+                    }
+                    text="Load another 20 entries"
+                  />
+                  <MenuOption
+                    onSelect={() => this.props.makeRemoteRequest(0, text)}
+                    text="Load all entries"
                   />
                 </MenuOptions>
               </Menu>
@@ -166,19 +169,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
     justifyContent: 'center',
   },
-  welcome: {
-    fontSize: 23,
-  },
-  TextInputStyle: {
-    textAlign: 'center',
-    height: 40,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#FF9800',
-    marginBottom: 10,
-  },
-  titleButton: {
-    backgroundColor: '#FF9800',
+  divider: {
+    marginVertical: 5,
+    marginHorizontal: 2,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
   },
   icon: {
     marginHorizontal: 5,
