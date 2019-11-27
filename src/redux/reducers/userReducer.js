@@ -3,6 +3,8 @@ import {
   FETCH_DATA_SUCCESS,
   FETCH_DATA_ERR,
   FILTER_DATA,
+  SORTDIRECTION_DATA,
+  FETCH_MORE_DATA,
 } from '../types';
 
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
   error: false,
   query: '',
   fullData: [],
+  padding: 20,
+  sortdirection: 1, //Ascending  1, Descending -1
 };
 
 export default (state = initialState, action) => {
@@ -40,6 +44,16 @@ export default (state = initialState, action) => {
         ...state,
         error: true,
         loading: false,
+      };
+    case SORTDIRECTION_DATA:
+      return {
+        ...state,
+        sortdirection: action.payload,
+      };
+    case FETCH_MORE_DATA:
+      return {
+        ...state,
+        padding: action.payload,
       };
     default:
       return state;

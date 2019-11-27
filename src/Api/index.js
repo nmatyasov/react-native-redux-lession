@@ -9,7 +9,7 @@ export const contains = ({name, email}, query) => {
   return false;
 };
 
-export const makeSortSectionList = data => {
+export const makeSectionList = data => {
   var arr = [];
   for (var i = 0; i < Object.keys(data).length; i++) {
     //iterate
@@ -27,30 +27,27 @@ export const makeSortSectionList = data => {
       });
     }
   }
-  arr.sort(function(a, b) {
-    var nameA = a.title.toLowerCase();
-    var nameB = b.title.toLowerCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  });
   return arr;
 };
 
-export const getUsers = (limit = 20, query = '') => {
+export const getUsers = (limit, query = '') => {
   return new Promise((resolve, reject) => {
     if (query.length === 0) {
-      resolve(_.take(users, limit));
+      if (limit > 0) {
+        resolve(_.take(users, limit));
+      } else {
+        resolve(users);
+      }
     } else {
       const formattedQuery = query.toLowerCase();
       const results = _.filter(users, user => {
         return contains(user, formattedQuery);
       });
-      resolve(_.take(results, limit));
+      if (limit > 0) {
+        resolve(_.take(results, limit));
+      } else {
+        resolve(results);
+      }
     }
   });
 };

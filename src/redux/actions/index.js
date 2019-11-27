@@ -3,10 +3,11 @@ import {
   FETCH_DATA_SUCCESS,
   FETCH_DATA_ERR,
   FILTER_DATA,
+  SORTDIRECTION_DATA,
 } from '../types';
 import _ from 'lodash';
 
-import {getUsers, contains, makeSortSectionList} from '../../Api';
+import {getUsers, contains, makeSectionList} from '../../Api';
 
 //future functional
 // export const debounceMakeRemoteRequest = _.debounce(
@@ -14,14 +15,14 @@ import {getUsers, contains, makeSortSectionList} from '../../Api';
 //   250,
 // );
 
-export const makeRemoteRequest = val => {
+export const makeRemoteRequest = (padding, val) => {
   return function(dispatch) {
     dispatch(getRequest());
-    getUsers(20, val)
+    getUsers(padding, val)
       .then(users => {
         //sort array by section
-        const sordedData = makeSortSectionList(users);
-        dispatch(getRequestSuccess(sordedData, users));
+        const secData = makeSectionList(users);
+        dispatch(getRequestSuccess(secData, users));
       })
       .catch(error => {
         dispatch(getRequestFailure());
@@ -59,9 +60,15 @@ export const handleSearch = (val, fullData) => {
       return contains(user, formatQuery);
     });
     //sort array by section
-    const sordedData = makeSortSectionList(data);
+    const secData = makeSectionList(data);
 
-    dispatch(getDataFiltered(val, sordedData));
+    dispatch(getDataFiltered(val, secData));
+  };
+};
+
+export const handleSortDirection = val => {
+  return function(dispatch) {
+    dispatch(getDataSorted(val === 1 ? -1 : 1));
   };
 };
 
@@ -69,5 +76,12 @@ function getDataFiltered(text, data) {
   return {
     type: FILTER_DATA,
     payload: {data: data, query: text},
+  };
+}
+
+function getDataSorted(val) {
+  return {
+    type: SORTDIRECTION_DATA,
+    payload: val,
   };
 }
