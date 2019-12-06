@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 
 import {Provider} from 'react-redux';
-
 import {MenuProvider} from 'react-native-popup-menu';
-
 import configureStore from './src/redux/store/configureStore';
-import HomeScreen from './src/HomeScreen';
+import AppNavigator from './src/screens/AppNavigator';
 
 const store = configureStore();
 
@@ -15,7 +13,7 @@ export default class App extends Component<Props> {
     return (
       <Provider store={store}>
         <MenuProvider>
-          <HomeScreen />
+          <AppNavigator />
         </MenuProvider>
       </Provider>
     );

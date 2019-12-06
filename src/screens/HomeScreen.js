@@ -8,8 +8,9 @@ import {
   KeyboardAvoidingView,
   Alert,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
-import {ListItem, SearchBar, Text, Icon} from 'react-native-elements';
+import {ListItem, SearchBar, Text, Icon, Divider} from 'react-native-elements';
 import {
   Menu,
   MenuOptions,
@@ -19,12 +20,15 @@ import {
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import TouchableScale from 'react-native-touchable-scale';
 
 import {
   makeRemoteRequest,
   handleSearch,
   handleSortDirection,
-} from './redux/actions';
+  handleSelectUser,
+} from '../redux/actions';
+import style from '../components/styles';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -34,19 +38,6 @@ class HomeScreen extends Component {
   componentDidMount() {
     this.props.makeRemoteRequest();
   }
-
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '86%',
-          backgroundColor: '#CED0CE',
-          marginLeft: '14%',
-        }}
-      />
-    );
-  };
 
   renderFooter = () => {
     if (!this.props.loading) {
@@ -72,10 +63,18 @@ class HomeScreen extends Component {
         title={`${item.name.first} ${item.name.last}`}
         subtitle={item.email}
         leftAvatar={{source: {uri: item.picture.thumbnail}}}
-        containerStyle={{borderBottomWidth: 0}}
+        containerStyle={{borderBottomWidth: 1}}
+        chevron={{size: 40}}
+        Component={TouchableScale}
+        onPress={() => this.onUserPress(item)}
       />
     );
   }
+
+  onUserPress = item => {
+    this.props.handleSelectUser(item);
+    this.props.navigation.navigate('Profile');
+  };
 
   renderSection({section}) {
     return (
@@ -92,7 +91,10 @@ class HomeScreen extends Component {
       </View>
     );
   }
-
+  clickHandler = () => {
+    //function to handle click on floating Action Button
+    Alert.alert('Floating Button Clicked');
+  };
   render() {
     const {data, text, fullData, sortdirection, padding} = this.props;
     return (
@@ -117,7 +119,7 @@ class HomeScreen extends Component {
               <Menu>
                 <MenuTrigger>
                   <Icon
-                    containerStyle={styles.icon}
+                    containerStyle={style.icon}
                     name="more-vert"
                     color="#bdc6cf"
                     size={30}
@@ -130,7 +132,7 @@ class HomeScreen extends Component {
                     }
                     text={sortdirection === 1 ? 'Sort by DESC' : 'Sort by ASC'}
                   />
-                  <View style={styles.divider} />
+                  <Divider />
                   <MenuOption
                     onSelect={() =>
                       this.props.makeRemoteRequest(padding + 20, text)
@@ -152,35 +154,19 @@ class HomeScreen extends Component {
             renderSectionHeader={this.renderSection.bind(this)}
             renderItem={this.renderItem.bind(this)}
             keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={this.renderSeparator}
             ListFooterComponent={this.renderFooter}
           />
         </KeyboardAvoidingView>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={this.clickHandler}
+          style={style.TouchableOpacityStyle}>
+          <Icon reverse name="person-add" color="#517fa4" />
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    marginTop: 50,
-    justifyContent: 'center',
-  },
-  divider: {
-    marginVertical: 5,
-    marginHorizontal: 2,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-  },
-  icon: {
-    marginHorizontal: 5,
-    width: 24,
-    marginVertical: 16,
-  },
-});
 
 function mapStateToProps(state) {
   return {
@@ -196,7 +182,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(
-      {makeRemoteRequest, handleSearch, handleSortDirection},
+      {makeRemoteRequest, handleSearch, handleSortDirection, handleSelectUser},
       dispatch,
     ),
   };

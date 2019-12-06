@@ -4,6 +4,10 @@ import {
   FETCH_DATA_ERR,
   FILTER_DATA,
   SORTDIRECTION_DATA,
+  SELECTED_USER,
+  UPDATE_USER,
+  DELETE_USER,
+  ADD_USER,
 } from '../types';
 import _ from 'lodash';
 
@@ -85,3 +89,10 @@ function getDataSorted(val) {
     payload: val,
   };
 }
+
+export const handleSelectUser = user => {
+  return {
+    type: SELECTED_USER,
+    payload: user,
+  };
+};

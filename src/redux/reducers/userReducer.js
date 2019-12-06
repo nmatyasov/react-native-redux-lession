@@ -5,6 +5,10 @@ import {
   FILTER_DATA,
   SORTDIRECTION_DATA,
   FETCH_MORE_DATA,
+  SELECTED_USER,
+  UPDATE_USER,
+  DELETE_USER,
+  ADD_USER,
 } from '../types';
 
 const initialState = {
@@ -15,6 +19,8 @@ const initialState = {
   fullData: [],
   padding: 20,
   sortdirection: 1, //Ascending  1, Descending -1
+  user: null,
+  isUpdate: false,
 };
 
 export default (state = initialState, action) => {
@@ -55,6 +61,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         padding: action.payload,
+      };
+    case SELECTED_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;
