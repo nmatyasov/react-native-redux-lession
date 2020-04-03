@@ -67,4 +67,22 @@ export default StyleSheet.create({
     right: 15,
     bottom: 80,
   },
+  datePickerBox: {
+    marginTop: 9,
+    borderColor: '#FF5722',
+    borderWidth: 0.5,
+    padding: 0,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    height: 38,
+    justifyContent: 'center',
+  },
+  datePickerText: {
+    fontSize: 14,
+    marginLeft: 5,
+    borderWidth: 0,
+    color: '#000',
+  },
 });

@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Alert,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import {ListItem, SearchBar, Text, Icon, Divider} from 'react-native-elements';

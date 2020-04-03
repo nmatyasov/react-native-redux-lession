@@ -4,6 +4,8 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
+import EditScreen from './EditScreen';
+import CreateScreen from './EditScreen';
 import ProfileScreenMenu from '../components/ProfileScreenMenu';
 
 const Navigator = createStackNavigator({
@@ -13,6 +15,18 @@ const Navigator = createStackNavigator({
   },
   Profile: {
     screen: ProfileScreen,
+    navigationOptions: ({navigation}) => ({
+      headerRight: <ProfileScreenMenu />,
+    }),
+  },
+  EditProfile: {
+    screen: EditScreen,
+    navigationOptions: ({navigation}) => ({
+      headerRight: <ProfileScreenMenu />,
+    }),
+  },
+  CreateProfile: {
+    screen: CreateScreen,
     navigationOptions: ({navigation}) => ({
       headerRight: <ProfileScreenMenu />,
     }),

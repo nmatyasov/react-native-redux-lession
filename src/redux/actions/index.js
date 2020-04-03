@@ -96,3 +96,17 @@ export const handleSelectUser = user => {
     payload: user,
   };
 };
+
+export const handleEditUser = user => {
+  return {
+    type: UPDATE_USER,
+    payload: user,
+  };
+};
+
+export const handleAddUser = user => {
+  return {
+    type: ADD_USER,
+    payload: user,
+  };
+};

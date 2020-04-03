@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "react": "16.9.0",
+    "react-moment": "^0.9.7",
     "react-native": "0.61.4",
     "react-native-action-button": "^2.8.5",
+    "react-native-datepicker-dialog": "0.0.9",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-popup-menu": "^0.15.6",

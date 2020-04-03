@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, Alert, TouchableOpacity} from 'react-native';
-import {Text, Avatar, Divider, Button, Icon} from 'react-native-elements';
+import {Text, Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 
 import * as actions from '../redux/actions';
@@ -8,11 +8,11 @@ import style from '../components/styles';
 
 class ProfileScreen extends Component {
   static navigationOptions = {
-    title: 'Profile',
+    title: 'View Profile',
   };
   clickHandler = () => {
-    //function to handle click on floating Action Button
-    Alert.alert('Floating Button Clicked');
+    this.props.handleEditUser(this.props.user);
+    this.props.navigation.navigate('EditProfile');
   };
   render() {
     return (
